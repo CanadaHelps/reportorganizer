@@ -517,5 +517,12 @@ class CRM_Reportorganizer_Utils {
       'Custom Sections' => $excludeReports,
     ];
   }
+
+  public static function checkOpportunityReports($template, $report_grouping) {
+    if(in_array($template, ['grant/detail', 'grant/statistics'])) {
+      return 'Opportunity';
+    }
+    return $report_grouping;
+  }
 }
 

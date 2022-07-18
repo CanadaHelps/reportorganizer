@@ -97,6 +97,7 @@ LEFT  JOIN civicrm_component comp
       'sequential' => 1,
       'option_group_id' => "component_template_section",
     ]);
+
     foreach ($sections['values'] as $section) {
       $sectionLabels[$section['value']] = $section['label'];
     }
@@ -153,6 +154,18 @@ LEFT  JOIN civicrm_component comp
       $rows['Contribute']['accordion'] = $sortedSections;
     }
 
+    $opportunityNoAccordionOrder = [
+      'Opportunity Report (Detailled)',
+      'Opportunity Report (Statistics)',
+      'Opportunity Report (Detail)',
+      'Opportunity Report (Detailed)',
+    ];
+
+    $sortedSections = CRM_Reportorganizer_Utils::noAccordionSorter('Contact', $opportunityNoAccordionOrder, $rows);
+    if (!empty($sortedSections)) {
+      $rows['Opportunity']['no_accordion'] = $sortedSections;
+    }
+
     // CRM-940 Remove all unsorted templates from view
     unset($rows['Contribute']['no_accordion']);
 
@@ -182,15 +195,6 @@ LEFT  JOIN civicrm_component comp
       $rows['Mail']['no_accordion'] = $sortedSections;
     }
 
-    $opportunityNoAccordionOrder = [
-      'Opportunity Report (Detailled)',
-      'Opportunity Report (Statistics)',
-      'Opportunity (Detailed)',
-    ];
-    $sortedSections = CRM_Reportorganizer_Utils::noAccordionSorter('Opportunity', $opportunityNoAccordionOrder, $rows);
-    if (!empty($sortedSections)) {
-      $rows['Opportunity']['no_accordion'] = $sortedSections;
-    }
 
     // Handle sorting for report instances within the sections.
     $instanceSections = [
