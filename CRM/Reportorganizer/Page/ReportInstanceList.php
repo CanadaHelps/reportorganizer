@@ -52,10 +52,8 @@ class CRM_Reportorganizer_Page_ReportInstanceList extends CRM_Core_Page {
    * @return array
    */
   public function info() {
-
     $report = '';
     $queryParams = [];
-
     if ($this->ovID) {
       $report .= " AND v.id = %1 ";
       $queryParams[1] = [$this->ovID, 'Integer'];
@@ -118,7 +116,6 @@ class CRM_Reportorganizer_Page_ReportInstanceList extends CRM_Core_Page {
                 AND inst.domain_id = %9
           ORDER BY  v.weight ASC, inst.title ASC";
     $queryParams[9] = [CRM_Core_Config::domainID(), 'Integer'];
-
     $dao = CRM_Core_DAO::executeQuery($sql, $queryParams);
 
     $config = CRM_Core_Config::singleton();
@@ -129,6 +126,7 @@ class CRM_Reportorganizer_Page_ReportInstanceList extends CRM_Core_Page {
       'sequential' => 1,
       'option_group_id' => "component_section",
     ]);
+
     foreach ($sections['values'] as $section) {
       $sectionLabels[$section['value']] = $section['label'];
     }
@@ -178,6 +176,7 @@ class CRM_Reportorganizer_Page_ReportInstanceList extends CRM_Core_Page {
           $rows[$report_grouping]['accordion'][$report_sub_grouping][$dao->id]['actions'] = $this->getActionLinks($dao->id, $dao->class_name);
         }
         else {
+          $report_grouping = CRM_Reportorganizer_Utils::checkOpportunityReports($dao->report_id, $report_grouping);
           $rows[$report_grouping]['no_accordion'][$dao->id]['title'] = $dao->title;
           $rows[$report_grouping]['no_accordion'][$dao->id]['label'] = $dao->label;
           $rows[$report_grouping]['no_accordion'][$dao->id]['description'] = $dao->description;
@@ -263,6 +262,7 @@ class CRM_Reportorganizer_Page_ReportInstanceList extends CRM_Core_Page {
         "Contribution History by GL Account (Detailed)",
       ],
     ];
+
     foreach ($instanceSections as $header => $sortOrder) {
       $sortedSections = CRM_Reportorganizer_Utils::insideAccordionSorter('Contribute', $header, $sortOrder, $rows);
       if (!empty($sortedSections)) {
