@@ -130,6 +130,7 @@ class CRM_Reportorganizer_Page_ReportInstanceList extends CRM_Core_Page {
     foreach ($sections['values'] as $section) {
       $sectionLabels[$section['value']] = $section['label'];
     }
+
     while ($dao->fetch()) {
       if (in_array($dao->report_id, self::$_exceptions)) {
         continue;
@@ -167,7 +168,9 @@ class CRM_Reportorganizer_Page_ReportInstanceList extends CRM_Core_Page {
         if ($dao->section_id) {
           $report_sub_grouping = $sectionLabels[$dao->section_id];
         }
+
         if ($report_sub_grouping) {
+          $report_grouping = CRM_Reportorganizer_Utils::checkOpportunityReports($dao->report_id, $report_grouping);
           $rows[$report_grouping]['accordion'][$report_sub_grouping][$dao->id]['title'] = $dao->title;
           $rows[$report_grouping]['accordion'][$report_sub_grouping][$dao->id]['label'] = $dao->label;
           $rows[$report_grouping]['accordion'][$report_sub_grouping][$dao->id]['description'] = $dao->description;
@@ -269,7 +272,6 @@ class CRM_Reportorganizer_Page_ReportInstanceList extends CRM_Core_Page {
         $rows['Contribute']['accordion'][$header] = $sortedSections;
       }
     }
-
     $rows = CRM_Reportorganizer_Utils::sortArrayByArray($rows, ["My", "Contribute", "Contact", "Opportunity"]);
     return $rows;
   }
