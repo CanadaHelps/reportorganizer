@@ -222,6 +222,51 @@ class CRM_Reportorganizer_Upgrader extends CRM_Reportorganizer_Upgrader_Base {
     }
   }
 
+  public function upgrade_4211() {
+    $this->ctx->log->info('CRM-1206-Typo in "Contributions (Detailed)" Report Template when you select "Create New Report" with SuperAdmin cred.'); // PEAR Log interface
+
+    $optionGroups = civicrm_api4('OptionGroup', 'get', [
+      'select' => [
+        'id',
+      ],
+      'where' => [
+        ['name', '=', 'report_template'],
+      ],
+      'chain' => [
+        'reportOptionValue' => ['OptionValue', 'get', [
+          'select' => [
+            'id',
+            'label',
+          ],
+          'where' => [
+            ['option_group_id', '=', '$id'], 
+            ['name', 'IN', ['CRM_Report_Form_Contact_Detail', 'CRM_Report_Form_Activity', 'CRM_Report_Form_Contribute_Detail', 'CRM_Report_Form_Contribute_Recur']],
+          ]
+        ]],
+      ],
+    ]);
+    foreach($optionGroups as $k=>$v)
+    {
+      if($v['reportOptionValue'])
+      {
+        foreach($v['reportOptionValue'] as $reportKey=>$reportValue)
+        {
+          $replacedValue = str_replace('Detailled', 'Detailed', $reportValue['label']);
+          $id = $reportValue['id'];
+          $results = civicrm_api4('OptionValue', 'update', [
+            'values' => [
+              'label' => $replacedValue,
+            ],
+            'where' => [
+              ['id', '=', $id],
+            ],
+          ]);
+        }
+      }
+    }
+    return TRUE;
+  }
+
   /**
    * Example: Run an external SQL script when the module is uninstalled.
    */

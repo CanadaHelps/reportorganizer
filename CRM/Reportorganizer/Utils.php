@@ -111,7 +111,7 @@ class CRM_Reportorganizer_Utils {
         "description" => "All Contacts",
       ],
       "Constituent Report (Detail)" => [
-        "label" => "Contacts (Detailled)",
+        "label" => "Contacts (Detailed)",
         "description" => "All Contacts with extra fields",
       ],
       "Extended Report - Flexible contact report" => [
@@ -136,7 +136,7 @@ class CRM_Reportorganizer_Utils {
         "description" => "Total amounts raised",
       ],
       "Contribution Detail Report" => [
-        "label" => "Contributions (Detailled)",
+        "label" => "Contributions (Detailed)",
         "description" => "Total amounts raised with individual Contribution information",
       ],
       "Repeat Contributions Report" => [
@@ -197,7 +197,7 @@ class CRM_Reportorganizer_Utils {
         "description" => "Total amounts raised from Recurring Contributions by each Payment Method",
       ],
       "Recurring Contributions Report" => [
-        "label" => "Recurring Contributions (Detailled)",
+        "label" => "Recurring Contributions (Detailed)",
         "description" => "Total amounts raised for Recurring Contributions",
       ],
       "Extended Report - Recurring Contribution Pivot Chart" => [
@@ -223,7 +223,7 @@ class CRM_Reportorganizer_Utils {
         "description" => "All Activities by type and date information",
       ],
       "Activity Details Report" => [
-        "label" => "Activities (Detailled)",
+        "label" => "Activities (Detailed)",
         "description" => "All Activities",
       ],
       "Extended Report - Activities" => [
@@ -319,7 +319,7 @@ class CRM_Reportorganizer_Utils {
       $contribComponent => [
         "General Contribution Reports" => [
           "Contributions (Summary)",
-          "Contributions (Detailled)",
+          "Contributions (Detailed)",
           "Repeat Contributions",
           "Top Donors",
           "SYBUNT",
@@ -336,7 +336,7 @@ class CRM_Reportorganizer_Utils {
         ],
         "Recurring Contribution Reports" => [
           "Recurring Contributions (Summary)",
-          "Recurring Contributions (Detailled)",
+          "Recurring Contributions (Detailed)",
           "Recurring Contributions (Extended, Pivot Chart)",
           "Recurring Contributions (Detailed)",
         ],
@@ -348,7 +348,7 @@ class CRM_Reportorganizer_Utils {
       $contactComponent => [
         "General Contact Reports" => [
           "Contacts (Summary)",
-          "Contacts (Detailled)",
+          "Contacts (Detailed)",
           "Contacts (Detailed)",
           "Contacts (Extended, Pivot Chart)",
           "Database Log",
@@ -356,7 +356,7 @@ class CRM_Reportorganizer_Utils {
         ],
         "Activity Reports" => [
           "Activities (Summary)",
-          "Activities (Detailled)",
+          "Activities (Detailed)",
           "Activities (Extended)",
           "Activities (Extended, Pivot Chart)",
           "Activities (Detailed)",
