@@ -66,7 +66,7 @@ LEFT  JOIN civicrm_component comp
         'Activities (Detailed)',
         'Activities (Extended)',
         'Activities (Extended, Pivot Chart)',
-        'Opportunity Report (Detailled)',
+        'Opportunity Report (Detailed)',
         'Opportunity Report (Statistics)',
         'Grant Report (Detailled)',
         'Grant Report (Statistics)',
