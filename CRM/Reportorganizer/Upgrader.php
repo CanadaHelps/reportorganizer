@@ -222,6 +222,21 @@ class CRM_Reportorganizer_Upgrader extends CRM_Reportorganizer_Upgrader_Base {
     }
   }
 
+  public function upgrade_4211() {
+    $this->ctx->log->info('CRM-1206-Typo in "Contributions (Detailed)" Report Template when you select "Create New Report" with SuperAdmin cred.'); // PEAR Log interface
+
+    $reportLabelUpdateData =   ['CRM_Report_Form_Contact_Detail' => 'Contacts (Detailed)', 
+  'CRM_Report_Form_Activity' => 'Activities (Detailed)', 
+  'CRM_Report_Form_Contribute_Detail'=> 'Contributions (Detailed)', 
+  'CRM_Report_Form_Contribute_Recur'=>'Recurring Contributions (Detailed)'];
+  foreach($reportLabelUpdateData as $reportKey =>$reportValue)
+  {
+    $sql = "UPDATE `civicrm_option_value` SET `label`='$reportValue' WHERE `name` = '$reportKey' AND `option_group_id` = (SELECT `id` from `civicrm_option_group` WHERE `name` = 'report_template')";
+    CRM_Core_DAO::executeQuery($sql);
+  }
+    return TRUE;
+  }
+
   /**
    * Example: Run an external SQL script when the module is uninstalled.
    */

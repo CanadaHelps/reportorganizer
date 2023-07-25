@@ -55,20 +55,20 @@ LEFT  JOIN civicrm_component comp
     global $user;
     if (in_array('client administrator', $user->roles)) {
       $hiddenTemplates = [
-        'Contributions (Detailled)',
+        'Contributions (Detailed)',
         'Contributions (Extended, Summary)',
         'Contributions (Extended, Pivot Chart)',
         'Contributions (Extended, Extra Fields)',
-        'Recurring Contributions (Detailled)',
+        'Recurring Contributions (Detailed)',
         'Recurring Contributions (Extended, Pivot Chart)',
-        'Contacts (Detailled)',
+        'Contacts (Detailed)',
         'Contacts (Extended, Pivot Chart)',
-        'Activities (Detailled)',
+        'Activities (Detailed)',
         'Activities (Extended)',
         'Activities (Extended, Pivot Chart)',
-        'Opportunity Report (Detailled)',
+        'Opportunity Report (Detailed)',
         'Opportunity Report (Statistics)',
-        'Grant Report (Detailled)',
+        'Grant Report (Detailed)',
         'Grant Report (Statistics)',
 	      'Membership Report (Summary)',
 	      'Membership Report (Detail)',
@@ -200,7 +200,7 @@ LEFT  JOIN civicrm_component comp
     $instanceSections = [
       "General Contribution Reports" => [
         "Contributions (Summary)",
-        "Contributions (Detailled)",
+        "Contributions (Detailed)",
         "Repeat Contributions",
         "Top Donors",
         "SYBUNT",
@@ -217,7 +217,7 @@ LEFT  JOIN civicrm_component comp
       ],
       "Recurring Contribution Reports" => [
         "Recurring Contributions (Summary)",
-        "Recurring Contributions (Detailled)",
+        "Recurring Contributions (Detailed)",
         "Recurring Contributions (Extended, Pivot Chart)",
         "Recurring Contributions (Detailed)",
       ],
@@ -236,7 +236,7 @@ LEFT  JOIN civicrm_component comp
     $instanceSections = [
       "General Contact Reports" => [
         "Contacts (Summary)",
-        "Contacts (Detailled)",
+        "Contacts (Detailed)",
         "Contacts (Detailed)",
         "Contacts (Extended, Pivot Chart)",
         "Database Log",
@@ -244,7 +244,7 @@ LEFT  JOIN civicrm_component comp
       ],
       "Activity Reports" => [
         "Activities (Summary)",
-        "Activities (Detailled)",
+        "Activities (Detailed)",
         "Activities (Extended)",
         "Activities (Extended, Pivot Chart)",
         "Activities (Detailed)",
