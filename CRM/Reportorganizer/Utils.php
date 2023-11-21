@@ -20,6 +20,18 @@ class CRM_Reportorganizer_Utils {
     }
     return $sortedSections;
   }
+  //CRM-2145 Added static function to sort templates in noAccordion pattern using ReportId rather than title
+  public static function noAccordionSorterByReportID($component, $sortOrder, $rows) {
+    $sortedSections = [];
+    foreach ($sortOrder as $order) {
+      foreach ($rows[$component]['no_accordion'] as $k => $v) {
+        if ($order == $v['report_id']) {
+          $sortedSections[$k] = $rows[$component]['no_accordion'][$k];
+        }
+      }
+    }
+    return $sortedSections;
+  }
 
   public static function accordionSorter($component, $sortOrder, $rows) {
     $sortedSections = [];
@@ -36,6 +48,18 @@ class CRM_Reportorganizer_Utils {
     foreach ($sortOrder as $order) {
       foreach ($rows[$component]['accordion'][$section] as $k => $v) {
         if ($order == $v['title']) {
+          $sortedSections[$k] = $rows[$component]['accordion'][$section][$k];
+        }
+      }
+    }
+    return $sortedSections;
+  }
+    //CRM-2145 Added static function to sort templates in insideAccordion pattern using ReportId rather than title
+  public static function insideAccordionSorterByReportID($component, $section, $sortOrder, $rows) {
+    $sortedSections = [];
+    foreach ($sortOrder as $order) {
+      foreach ($rows[$component]['accordion'][$section] as $k => $v) {
+        if ($order == $v['report_id']) {
           $sortedSections[$k] = $rows[$component]['accordion'][$section][$k];
         }
       }
@@ -82,7 +106,7 @@ class CRM_Reportorganizer_Utils {
       "Contribution History by GL Account (Summary)" => "Total amounts raised by GL Account",
       "Contribution History by GL Account (Detailed)" => "Total amounts raised by GL Account with individual Contribution information",
       "Contribution History by Source (Summary)" => "Total amounts raised by Source",
-      "Recurring Contributions (Summary)" => "Total amounts raised by Recurring Contributions with individual Contribution information",
+      "Recurring Contributions" => "Total amounts raised by Recurring Contributions with individual Contribution information",
       "Receipts" => "Contributions by Receipt Number",
       // Opportunity Reports
       "Opportunity Report" => "All Opportunities",
@@ -315,56 +339,40 @@ class CRM_Reportorganizer_Utils {
     self::updateReportTemplates($contactComponent);
 
     // Add entries in component report template section.
+    //CRM-2145 modified enteries by limiting them to migrated contributions templates created by CH
+    // For contact component limiting listing to necessary templates
+    //CRM-2145 Templates by report_id rather than label
     $templateSections = [
       $contribComponent => [
         "General Contribution Reports" => [
-          "Contributions (Summary)",
-          "Contributions (Detailed)",
-          "Repeat Contributions",
-          "Top Donors",
-          "SYBUNT",
-          "LYBNT",
-          "Contributions by Organization",
-          "Contributions by Household",
-          "Contributions by Relationship",
-          "Contributions for Bookkeeping",
-          "Contributions (Extended, Summary)",
-          "Contributions (Detailed)",
-          "Contributions (Extended, Pivot Chart)",
-          "Contributions (Extended, Extra Fields)",
-          "Contributions for Bookkeeping (Detailed)",
+          "chreports/contrib_detailed",
+          "chreports/contrib_summary",
+          "chreports/contrib_period_detailed",
+          "chreports/contrib_summary_monthly",
+          "chreports/contrib_summary_yearly",
+          "chreports/contact_top_donors",
+          "chreports/contrib_sybunt",
+          "chreports/contrib_lybunt",
+          "chreports/contrib_glaccount",
+          "chreports/contrib_period_compare"
         ],
         "Recurring Contribution Reports" => [
-          "Recurring Contributions (Summary)",
-          "Recurring Contributions (Detailed)",
-          "Recurring Contributions (Extended, Pivot Chart)",
-          "Recurring Contributions (Detailed)",
-        ],
-        "Receipt Reports" => [
-          "Tax Receipts (Issued)",
-          "Tax Receipts (Not Yet Issued)",
-        ],
+          "chreports/contrib_recurring",
+        ]
       ],
       $contactComponent => [
         "General Contact Reports" => [
-          "Contacts (Summary)",
-          "Contacts (Detailed)",
-          "Contacts (Detailed)",
-          "Contacts (Extended, Pivot Chart)",
-          "Database Log",
-          "Address History",
+          "contact/summary",
+          "contact/detail",
+          "contact/log",
+          "contact/addresshistory"
         ],
         "Activity Reports" => [
-          "Activities (Summary)",
-          "Activities (Detailed)",
-          "Activities (Extended)",
-          "Activities (Extended, Pivot Chart)",
-          "Activities (Detailed)",
+          "activitySummary",
         ],
         "Relationship Reports" => [
-          "Relationships",
-          "Current Employer",
-          "Relationships (Detailed)",
+          "contact/relationship",
+          "contact/currentEmployer"
         ]
       ],
     ];
@@ -381,7 +389,7 @@ class CRM_Reportorganizer_Utils {
             // Fetch the report template by label.
             $template = civicrm_api3("ReportTemplate", "get", [
               "sequential" => 1,
-              "label" => $reportTitle,
+              "value" => $reportTitle,
             ]);
             if (!empty($template['id'])) {
               $dao = new CRM_Reportorganizer_BAO_ReportTemplateOrganizer();
@@ -483,7 +491,7 @@ class CRM_Reportorganizer_Utils {
         "Contribution History by GL Account (Summary)",
         "Contribution History by GL Account (Detailed)",
         "Contribution History by Source (Summary)",
-        "Recurring Contributions (Summary)",
+        "Recurring Contributions",
         "Receipts",
       ],
       $opportunityComponent => [
