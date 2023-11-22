@@ -222,7 +222,7 @@ class CRM_Reportorganizer_Page_ReportInstanceList extends CRM_Core_Page {
     // Handle sorting of reserved instances
     $contribNoAccordionOrder = [
       'Contribution History by Source (Summary)',
-      'Recurring Contributions (Summary)',
+      'Recurring Contributions',
       'Receipts',
     ];
     $sortedSections = CRM_Reportorganizer_Utils::noAccordionSorter('Contribute', $contribNoAccordionOrder, $rows);
