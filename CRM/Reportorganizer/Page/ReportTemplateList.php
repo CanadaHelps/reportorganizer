@@ -61,7 +61,6 @@ LEFT  JOIN civicrm_component comp
         'Contributions (Extended, Extra Fields)',
         'Recurring Contributions (Detailed)',
         'Recurring Contributions (Extended, Pivot Chart)',
-        'Contacts (Detailed)',
         'Contacts (Extended, Pivot Chart)',
         'Activities (Detailed)',
         'Activities (Extended)',
