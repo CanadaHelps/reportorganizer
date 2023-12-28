@@ -87,6 +87,7 @@ LEFT  JOIN civicrm_component comp
       $hideClause .= "v.label NOT IN ('" . implode("', '", $hiddenTemplates) . "') ";
       $sql .= $hideClause;
     }
+    //CRM-2160 Changed order by clause to list report templates Alphabetically
     $sql .= " ORDER BY  v.label ";
 
     $dao = CRM_Core_DAO::executeQuery($sql);
@@ -246,7 +247,7 @@ LEFT  JOIN civicrm_component comp
         $rows['Contact']['accordion'][$header] = $sortedSections;
       }
     }
-
+    //CRM-2160 Changed row order to list reporting components Alphabetically
     $rows = CRM_Reportorganizer_Utils::sortArrayByArray($rows, ["Campaign Group", "Contact", "Contribute", "Mail", "Member", "Opportunity"]);
     
     // Hide Campaign Group section
