@@ -93,7 +93,7 @@ class CRM_Reportorganizer_Page_ReportInstanceList extends CRM_Core_Page {
       ];
       $report .= " AND inst.title NOT IN ('" . implode("', '", $hiddenInstances) . "') ";
     }
-
+    //CRM-2160 Changed order by clause to list reports Alphabetically
     $sql = "
         SELECT inst.id, inst.title, inst.report_id, inst.description,  inst.owner_id, v.label, v.grouping, v.name as class_name, r.section_id,
           CASE
@@ -272,6 +272,7 @@ class CRM_Reportorganizer_Page_ReportInstanceList extends CRM_Core_Page {
         $rows['Contribute']['accordion'][$header] = $sortedSections;
       }
     }
+    //CRM-2160 Changed row order to list reporting components Alphabetically
     $rows = CRM_Reportorganizer_Utils::sortArrayByArray($rows, ["Contact" ,"Contribute" ,"My" ,"Opportunity"]);
     return $rows;
   }
