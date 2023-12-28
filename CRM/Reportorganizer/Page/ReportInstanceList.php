@@ -114,7 +114,7 @@ class CRM_Reportorganizer_Page_ReportInstanceList extends CRM_Core_Page {
 
           WHERE v.is_active = 1 {$report}
                 AND inst.domain_id = %9
-          ORDER BY  v.weight ASC, inst.title ASC";
+          ORDER BY  inst.title ASC,v.weight ASC";
     $queryParams[9] = [CRM_Core_Config::domainID(), 'Integer'];
     $dao = CRM_Core_DAO::executeQuery($sql, $queryParams);
 
@@ -222,8 +222,8 @@ class CRM_Reportorganizer_Page_ReportInstanceList extends CRM_Core_Page {
     // Handle sorting of reserved instances
     $contribNoAccordionOrder = [
       'Contribution History by Source (Summary)',
-      'Recurring Contributions',
       'Receipts',
+      'Recurring Contributions',
     ];
     $sortedSections = CRM_Reportorganizer_Utils::noAccordionSorter('Contribute', $contribNoAccordionOrder, $rows);
     if (!empty($sortedSections)) {
@@ -231,8 +231,8 @@ class CRM_Reportorganizer_Page_ReportInstanceList extends CRM_Core_Page {
     }
 
     $contactNoAccordionOrder = [
-      "Contact Report (Detailed)",
       "Activity Report",
+      "Contact Report (Detailed)",
       "New Email Replies",
       "Relationship Report",
     ];
@@ -244,25 +244,25 @@ class CRM_Reportorganizer_Page_ReportInstanceList extends CRM_Core_Page {
     // Handle sorting for report instances within the sections.
     $instanceSections = [
       "Contribution History by Campaign" => [
-        "Contribution History by Campaign (Summary)",
         "Contribution History by Campaign (Detailed)",
         "Contribution History by Campaign (Monthly)",
+        "Contribution History by Campaign (Summary)",
         "Contribution History by Campaign (Yearly)",
       ],
       "Contribution History by Campaign Group" => [
-        "Contribution History by Campaign Group (Summary)",
         "Contribution History by Campaign Group (Detailed)",
+        "Contribution History by Campaign Group (Summary)",
       ],
       "Contribution History by Fund" => [
         "Contribution History by CH Fund (Summary)",
-        "Contribution History by Fund (Summary)",
         "Contribution History by Fund (Detailed)",
         "Contribution History by Fund (Monthly)",
+        "Contribution History by Fund (Summary)",
         "Contribution History by Fund (Yearly)",
       ],
       "Contribution History by GL Account" => [
-        "Contribution History by GL Account (Summary)",
         "Contribution History by GL Account (Detailed)",
+        "Contribution History by GL Account (Summary)",
       ],
     ];
 
@@ -272,7 +272,7 @@ class CRM_Reportorganizer_Page_ReportInstanceList extends CRM_Core_Page {
         $rows['Contribute']['accordion'][$header] = $sortedSections;
       }
     }
-    $rows = CRM_Reportorganizer_Utils::sortArrayByArray($rows, ["My", "Contribute", "Contact", "Opportunity"]);
+    $rows = CRM_Reportorganizer_Utils::sortArrayByArray($rows, ["Contact" ,"Contribute" ,"My" ,"Opportunity"]);
     return $rows;
   }
 

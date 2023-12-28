@@ -343,38 +343,38 @@ class CRM_Reportorganizer_Utils {
     // For contact component limiting listing to necessary templates
     //CRM-2145 Templates by report_id rather than label
     $templateSections = [
-      $contribComponent => [
-        "General Contribution Reports" => [
-          "chreports/contrib_detailed",
-          "chreports/contrib_summary",
-          "chreports/contrib_period_detailed",
-          "chreports/contrib_summary_monthly",
-          "chreports/contrib_summary_yearly",
-          "chreports/contact_top_donors",
-          "chreports/contrib_sybunt",
-          "chreports/contrib_lybunt",
-          "chreports/contrib_glaccount",
-          "chreports/contrib_period_compare"
-        ],
-        "Recurring Contribution Reports" => [
-          "chreports/contrib_recurring",
-        ]
-      ],
       $contactComponent => [
+        "Activity Reports" => [
+          "activitySummary",
+        ],
         "General Contact Reports" => [
           "contact/summary",
           "contact/detail",
           "contact/log",
           "contact/addresshistory"
         ],
-        "Activity Reports" => [
-          "activitySummary",
-        ],
         "Relationship Reports" => [
           "contact/relationship",
           "contact/currentEmployer"
         ]
       ],
+      $contribComponent => [
+        "General Contribution Reports" => [
+          "chreports/contrib_detailed",
+          "chreports/contrib_summary",
+          "chreports/contrib_summary_monthly",
+          "chreports/contrib_summary_yearly",
+          "chreports/contrib_period_compare",
+          "chreports/contrib_period_detailed",
+          "chreports/contrib_glaccount",
+          "chreports/contrib_lybunt",
+          "chreports/contrib_sybunt",
+          "chreports/contact_top_donors"
+        ],
+        "Recurring Contribution Reports" => [
+          "chreports/contrib_recurring",
+        ]
+        ],
     ];
     foreach ($templateSections as $component => $sectionHeader) {
       foreach($sectionHeader as $header => $reportTemplate) {
@@ -408,25 +408,25 @@ class CRM_Reportorganizer_Utils {
     $instanceSections = [
       $contribComponent => [
         "Contribution History by Campaign" => [
-          "Contribution History by Campaign (Summary)",
           "Contribution History by Campaign (Detailed)",
           "Contribution History by Campaign (Monthly)",
+          "Contribution History by Campaign (Summary)",
           "Contribution History by Campaign (Yearly)",
         ],
         "Contribution History by Campaign Group" => [
-          "Contribution History by Campaign Group (Summary)",
           "Contribution History by Campaign Group (Detailed)",
+          "Contribution History by Campaign Group (Summary)",
         ],
         "Contribution History by Fund" => [
           "Contribution History by CH Fund (Summary)",
-          "Contribution History by Fund (Summary)",
           "Contribution History by Fund (Detailed)",
           "Contribution History by Fund (Monthly)",
+          "Contribution History by Fund (Summary)",
           "Contribution History by Fund (Yearly)",
         ],
         "Contribution History by GL Account" => [
-          "Contribution History by GL Account (Summary)",
           "Contribution History by GL Account (Detailed)",
+          "Contribution History by GL Account (Summary)",
         ],
         "Custom Contribution Reports" => [],
       ],
@@ -471,28 +471,28 @@ class CRM_Reportorganizer_Utils {
     // Add the remainder of the report instances to custom section.
     $excludeReports = [
       $contactComponent => [
-        "Contact Report (Detailed)",
         "Activity Report",
+        "Contact Report (Detailed)",
         "New Email Replies",
         "Relationship Report",
       ],
       $contribComponent => [
-        "Contribution History by Campaign (Summary)",
         "Contribution History by Campaign (Detailed)",
         "Contribution History by Campaign (Monthly)",
+        "Contribution History by Campaign (Summary)",
         "Contribution History by Campaign (Yearly)",
-        "Contribution History by Campaign Group (Summary)",
         "Contribution History by Campaign Group (Detailed)",
+        "Contribution History by Campaign Group (Summary)",
         "Contribution History by CH Fund (Summary)",
-        "Contribution History by Fund (Summary)",
         "Contribution History by Fund (Detailed)",
         "Contribution History by Fund (Monthly)",
+        "Contribution History by Fund (Summary)",
         "Contribution History by Fund (Yearly)",
-        "Contribution History by GL Account (Summary)",
         "Contribution History by GL Account (Detailed)",
+        "Contribution History by GL Account (Summary)",
         "Contribution History by Source (Summary)",
-        "Recurring Contributions",
         "Receipts",
+        "Recurring Contributions",
       ],
       $opportunityComponent => [
         "Opportunity Report",
