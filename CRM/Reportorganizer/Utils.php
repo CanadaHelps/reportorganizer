@@ -12,9 +12,11 @@ class CRM_Reportorganizer_Utils {
   public static function noAccordionSorter($component, $sortOrder, $rows) {
     $sortedSections = [];
     foreach ($sortOrder as $order) {
-      foreach ($rows[$component]['no_accordion'] as $k => $v) {
-        if ($order == $v['title']) {
-          $sortedSections[$k] = $rows[$component]['no_accordion'][$k];
+      if (array_key_exists($component, $rows) && is_array($rows[$component]['no_accordion'])) { 
+        foreach ($rows[$component]['no_accordion'] as $k => $v) {
+          if ($order == $v['title']) {
+            $sortedSections[$k] = $rows[$component]['no_accordion'][$k];
+          }
         }
       }
     }
@@ -36,7 +38,7 @@ class CRM_Reportorganizer_Utils {
   public static function accordionSorter($component, $sortOrder, $rows) {
     $sortedSections = [];
     foreach ($sortOrder as $order) {
-      if (array_key_exists($order, $rows[$component]['accordion'])) {
+      if (array_key_exists($component, $rows) && array_key_exists($order, $rows[$component]['accordion'])) {
         $sortedSections[$order] = $rows[$component]['accordion'][$order];
       }
     }
@@ -46,11 +48,16 @@ class CRM_Reportorganizer_Utils {
   public static function insideAccordionSorter($component, $section, $sortOrder, $rows) {
     $sortedSections = [];
     foreach ($sortOrder as $order) {
-      foreach ($rows[$component]['accordion'][$section] as $k => $v) {
-        if ($order == $v['title']) {
-          $sortedSections[$k] = $rows[$component]['accordion'][$section][$k];
+      
+      if (array_key_exists($component, $rows) && is_array($rows[$component]['accordion']) && is_array($rows[$component]['accordion'][$section])) {
+        foreach ($rows[$component]['accordion'][$section] as $k => $v) {
+          if ($order == $v['title']) {
+            $sortedSections[$k] = $rows[$component]['accordion'][$section][$k];
+          }
         }
-      }
+      } 
+      
+      
     }
     return $sortedSections;
   }
