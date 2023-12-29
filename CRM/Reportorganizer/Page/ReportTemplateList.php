@@ -87,7 +87,8 @@ LEFT  JOIN civicrm_component comp
       $hideClause .= "v.label NOT IN ('" . implode("', '", $hiddenTemplates) . "') ";
       $sql .= $hideClause;
     }
-    $sql .= " ORDER BY  v.weight ";
+    //CRM-2160 Changed order by clause to list report templates Alphabetically
+    $sql .= " ORDER BY  v.label ";
 
     $dao = CRM_Core_DAO::executeQuery($sql);
     $rows = [];
@@ -148,8 +149,8 @@ LEFT  JOIN civicrm_component comp
     // Handle sorting of reserved sections
     $contributionSectionOrder = [
       'General Contribution Reports',
-      'Recurring Contribution Reports',
       'Receipt Reports',
+      'Recurring Contribution Reports',
     ];
     $sortedSections = CRM_Reportorganizer_Utils::accordionSorter('Contribute', $contributionSectionOrder, $rows);
     if (!empty($sortedSections)) {
@@ -169,8 +170,8 @@ LEFT  JOIN civicrm_component comp
     unset($rows['Contribute']['no_accordion']);
 
     $contactSectionOrder = [
-      'General Contact Reports',
       'Activity Reports',
+      'General Contact Reports',
       'Relationship Reports',
     ];
     $sortedSections = CRM_Reportorganizer_Utils::accordionSorter('Contact', $contactSectionOrder, $rows);
@@ -184,10 +185,10 @@ LEFT  JOIN civicrm_component comp
     // Handle sorting of reserved instances
     $mailNoAccordionOrder = [
       'Mail Bounces',
-      'Mail (Summary)',
-      'Mail Opened',
       'Mail Click-Through',
       'Mail (Detailed)',
+      'Mail Opened',
+      'Mail (Summary)',
     ];
     $sortedSections = CRM_Reportorganizer_Utils::noAccordionSorter('Mail', $mailNoAccordionOrder, $rows);
     if (!empty($sortedSections)) {
@@ -200,21 +201,21 @@ LEFT  JOIN civicrm_component comp
     //CRM-2145 Templates by report_id rather than label
     $instanceSections = [
       "General Contribution Reports" => [
-          "chreports/contrib_detailed",
-          "chreports/contrib_summary",
-          "chreports/contrib_period_detailed",
-          "chreports/contrib_summary_monthly",
-          "chreports/contrib_summary_yearly",
-          "chreports/contact_top_donors",
-          "chreports/contrib_sybunt",
-          "chreports/contrib_lybunt",
-          "chreports/contrib_glaccount",
-          "chreports/contrib_period_compare"
+        "chreports/contrib_detailed",
+        "chreports/contrib_summary",
+        "chreports/contrib_summary_monthly",
+        "chreports/contrib_summary_yearly",
+        "chreports/contrib_period_compare",
+        "chreports/contrib_period_detailed",
+        "chreports/contrib_glaccount",
+        "chreports/contrib_lybunt",
+        "chreports/contrib_sybunt",
+        "chreports/contact_top_donors"
+      ],
+      "Receipt Reports" => [
       ],
       "Recurring Contribution Reports" => [
         "chreports/contrib_recurring",
-      ],
-      "Receipt Reports" => [
       ],
     ];
     foreach ($instanceSections as $header => $sortOrder) {
@@ -225,18 +226,18 @@ LEFT  JOIN civicrm_component comp
     }
     // For contact component limiting listing to necessary templates
     $instanceSections = [
-      "General Contact Reports" => [
-        "contact/summary",
-        "contact/detail",
-        "contact/log",
-        "contact/addresshistory",
-      ],
       "Activity Reports" => [
         "activitySummary",
       ],
+      "General Contact Reports" => [
+        "contact/addresshistory",
+        "contact/detail",
+        "contact/summary",
+        "contact/log",
+      ],
       "Relationship Reports" => [
-        "contact/relationship",
         "contact/currentEmployer",
+        "contact/relationship",
       ]
     ];
 
@@ -246,8 +247,8 @@ LEFT  JOIN civicrm_component comp
         $rows['Contact']['accordion'][$header] = $sortedSections;
       }
     }
-
-    $rows = CRM_Reportorganizer_Utils::sortArrayByArray($rows, ["Contribute", "Contact", "Mail", "Opportunity", "Member", "Campaign Group"]);
+    //CRM-2160 Changed row order to list reporting components Alphabetically
+    $rows = CRM_Reportorganizer_Utils::sortArrayByArray($rows, ["Campaign Group", "Contact", "Contribute", "Mail", "Member", "Opportunity"]);
     
     // Hide Campaign Group section
     unset($rows['Campaign Group']);
