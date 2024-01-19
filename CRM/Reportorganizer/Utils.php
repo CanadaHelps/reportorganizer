@@ -444,6 +444,7 @@ class CRM_Reportorganizer_Utils {
         "Custom Opportunity Reports" => [],
       ]
     ];
+    $additionalInstanceList = [];
     foreach ($instanceSections as $component => $sectionHeader) {
       foreach ($sectionHeader as $header => $instanceTitles) {
         $optionVal = civicrm_api3('OptionValue', 'get', [
@@ -459,6 +460,8 @@ class CRM_Reportorganizer_Utils {
                 "sequential" => 1,
                 "title" => $instanceTitle,
                 "owner_id" => ["IS NULL" => 1],
+                "created_id" => ["IS NULL" => 1],
+                'options' => ['limit' => 1]
               ]);
               if (!empty($instance['id'])) {
                 $dao = new CRM_Reportorganizer_DAO_ReportOrganizer();
@@ -468,6 +471,17 @@ class CRM_Reportorganizer_Utils {
                 $dao->find(TRUE);
                 $dao->save();
                 $dao->free();
+              }
+              //Report instances with the same title with created_id not null shoul be displayed in Custom Contribution Reports
+              $additionalInstance = civicrm_api3("ReportInstance", "get", [
+                "sequential" => 1,
+                "title" => $instanceTitle,
+                'created_id' => ['IS NOT NULL' => 1],
+              ]);
+              if (!empty($additionalInstance['values'])) {
+                foreach ($additionalInstance['values'] as $instanceData) {
+                  $additionalInstanceList[] = ['id'=> $instanceData['id']];
+                }
               }
             }
           }
@@ -512,6 +526,10 @@ class CRM_Reportorganizer_Utils {
       WHERE r.title NOT IN ('" . implode("', '", $reportsToExclude) . "')
       AND v.component_id = %1 AND r.owner_id IS NULL";
       $customReports = CRM_Core_DAO::executeQuery($sql, [1 => [$component, 'Integer']])->fetchAll();
+      //To display contribution reports which has same title but user created in Custom Contribution Reports 
+      if($component == $contribComponent && !empty($additionalInstanceList)){
+         $customReports =  array_merge($customReports, $additionalInstanceList);
+      }
       foreach ($customReports as $customReport) {
         $dao = new CRM_Reportorganizer_DAO_ReportOrganizer();
         $dao->report_instance_id = $customReport['id'];
