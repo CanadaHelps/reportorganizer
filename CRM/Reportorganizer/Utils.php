@@ -477,6 +477,7 @@ class CRM_Reportorganizer_Utils {
                 "sequential" => 1,
                 "title" => $instanceTitle,
                 'created_id' => ['IS NOT NULL' => 1],
+                "owner_id" => ["IS NULL" => 1],
               ]);
               if (!empty($additionalInstance['values'])) {
                 foreach ($additionalInstance['values'] as $instanceData) {
