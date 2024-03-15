@@ -554,7 +554,7 @@ class CRM_Reportorganizer_Utils {
   }
 
   public static function checkOpportunityReports($template, $report_grouping) {
-    if(in_array($template, ['grant/detail', 'grant/statistics'])) {
+    if(in_array($template, ['chreports/opportunity_detailed', 'grant/statistics'])) {
       return 'Opportunity';
     }
     return $report_grouping;
