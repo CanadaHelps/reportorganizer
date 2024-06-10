@@ -102,7 +102,7 @@ LEFT  JOIN civicrm_component comp
       $sectionLabels[$section['value']] = $section['label'];
     }
     while ($dao->fetch()) {
-      if ($dao->component_name != 'Contact' && $dao->component_name != $dao->grouping &&
+      if (($dao->component_name != 'Contact' && $dao->component_name != 'Grant') && $dao->component_name != $dao->grouping &&
         !in_array("Civi{$dao->component_name}", $config->enableComponents)
       ) {
         continue;
