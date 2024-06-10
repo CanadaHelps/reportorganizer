@@ -137,7 +137,7 @@ class CRM_Reportorganizer_Page_ReportInstanceList extends CRM_Core_Page {
       }
 
       $enabled = in_array("Civi{$dao->compName}", $config->enableComponents);
-      if ($dao->compName == 'Contact' || $dao->compName == $dao->grouping) {
+      if ($dao->compName == 'Contact' || $dao->compName == 'Grant' || $dao->compName == $dao->grouping) {
         $enabled = TRUE;
       }
 
